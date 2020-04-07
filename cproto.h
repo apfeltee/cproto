@@ -150,7 +150,7 @@ typedef struct declarator
     long end_comment; /* end offset of comment */
     FuncDefStyle func_def; /* style of function definition */
     ParameterList params; /* function parameters */
-    boolean pointer; /* TRUE if it declares a pointer */
+    boolean pointer; /* true if it declares a pointer */
     struct declarator* head; /* head function declarator */
     struct declarator* func_stack; /* stack of function declarators */
     struct declarator* next; /* next declarator in list */

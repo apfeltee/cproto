@@ -94,9 +94,9 @@ static int contains(char* ref, char* tst)
     while(*tst)
     {
         if(!strncmp(ref, tst++, len))
-            return TRUE;
+            return true;
     }
-    return FALSE;
+    return false;
 }
 #endif /* apollo */
 
@@ -106,7 +106,7 @@ void WalkBack(void)
     static char *first = "\"WalkBack\"", *last = "\"unix_$main\"";
     auto FILE* pp;
     auto char bfr[BUFSIZ];
-    auto int ok = FALSE;
+    auto int ok = false;
     static int count;
 
     Trace("%s %d\n", first, ++count);
@@ -119,7 +119,7 @@ void WalkBack(void)
         if(ok && contains(last, bfr))
             break;
         else if(contains(first, bfr))
-            ok = TRUE;
+            ok = true;
         else if(ok)
             Trace("%s", bfr);
     }

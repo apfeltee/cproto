@@ -6,15 +6,9 @@
 #define SYSTEM_H
 
 #include <stdio.h>
+#include <stdbool.h>
 #include <ctype.h>
 
-#ifndef TRUE
-    #define TRUE (1)
-#endif
-
-#ifndef FALSE
-    #define FALSE (0)
-#endif
 
 /* Watcom C++ predefines __DOS__ when the target platform is MS-DOS */
 /* Borland C++ for MS-DOS predefines __MSDOS__ */

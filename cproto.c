@@ -23,32 +23,32 @@ char* progname;
 /* If nonzero, output variables declared "extern" in include-files */
 unsigned extern_in = 0;
 
-/* When TRUE, track the include-level (works with gcc, not some others) */
-int do_tracking = FALSE;
+/* When true, track the include-level (works with gcc, not some others) */
+int do_tracking = false;
 
-/* When TRUE, suppress return-statements in function-bodies */
-int exitlike_func = FALSE;
+/* When true, suppress return-statements in function-bodies */
+int exitlike_func = false;
 
-/* If TRUE, output "extern" before global declarations */
-boolean extern_out = FALSE;
+/* If true, output "extern" before global declarations */
+boolean extern_out = false;
 
 /* By default, generate global declarations only */
 Scope scope_out = SCOPE_EXTERN;
 
-/* If TRUE, output definitions for inline functions */
-boolean inline_out = FALSE;
+/* If true, output definitions for inline functions */
+boolean inline_out = false;
 
-/* If TRUE, export typedef declarations (needed for lint-libs) */
-boolean types_out = FALSE;
+/* If true, export typedef declarations (needed for lint-libs) */
+boolean types_out = false;
 
-/* If TRUE, undef functions to avoid shadowing problems */
-boolean lint_shadowed = FALSE;
+/* If true, undef functions to avoid shadowing problems */
+boolean lint_shadowed = false;
 
-/* If TRUE, generate variable declarations */
-boolean variables_out = FALSE;
+/* If true, generate variable declarations */
+boolean variables_out = false;
 
-/* If TRUE, enable formal parameter promotion */
-boolean promote_param = TRUE;
+/* If true, enable formal parameter promotion */
+boolean promote_param = true;
 
 /* Style of function prototype to generate */
 PrototypeStyle proto_style = PROTO_ANSI;
@@ -56,20 +56,20 @@ PrototypeStyle proto_style = PROTO_ANSI;
 /* Function definition style converted to */
 FuncDefStyle func_style = FUNC_UNKNOWN;
 
-/* If TRUE, put guard macro around prototype parameters */
-boolean proto_macro = FALSE;
+/* If true, put guard macro around prototype parameters */
+boolean proto_macro = false;
 
 /* Name of macro to guard prototypes */
 const char* macro_name = "P_";
 
-/* If TRUE, output prototype macro definition */
-boolean define_macro = TRUE;
+/* If true, output prototype macro definition */
+boolean define_macro = true;
 
-/* If TRUE, output comments in prototypes */
-boolean proto_comments = FALSE;
+/* If true, output comments in prototypes */
+boolean proto_comments = false;
 
-/* If TRUE, output comments naming source files */
-boolean file_comments = TRUE;
+/* If true, output comments naming source files */
+boolean file_comments = true;
 
 /* Conditional compilation directive output in front of function definitions */
 const char* func_directive = "#ifdef ANSI_FUNC";
@@ -86,8 +86,8 @@ FuncFormat fmt[] = {
     { "", "\n", " ", "\n    ", "\n    ", "\n" },
 };
 
-/* If TRUE, don't output message if unable to read an include file */
-boolean quiet = FALSE;
+/* If true, don't output message if unable to read an include file */
+boolean quiet = false;
 
 /* Include file directories */
 unsigned num_inc_dir = 0;
@@ -623,10 +623,10 @@ static void process_options(int* pargc, char*** pargv)
                 func_style = FUNC_BOTH;
                 break;
             case 'c':
-                proto_comments = TRUE;
+                proto_comments = true;
                 break;
             case 'd':
-                define_macro = FALSE;
+                define_macro = false;
                 break;
             case 'E':
 #ifdef CPP
@@ -641,7 +641,7 @@ static void process_options(int* pargc, char*** pargv)
 #endif
                 break;
             case 'e':
-                extern_out = TRUE;
+                extern_out = true;
                 break;
             case 'C':
             case 'F':
@@ -752,16 +752,16 @@ static void process_options(int* pargc, char*** pargv)
                 }
                 break;
             case 'm':
-                proto_macro = TRUE;
+                proto_macro = true;
                 break;
             case 'M':
                 macro_name = optarg;
                 break;
             case 'p':
-                promote_param = FALSE;
+                promote_param = false;
                 break;
             case 'q':
-                quiet = TRUE;
+                quiet = true;
                 break;
             case 'S':
                 scope_out = SCOPE_STATIC;
@@ -770,7 +770,7 @@ static void process_options(int* pargc, char*** pargv)
                 scope_out = SCOPE_ALL;
                 break;
             case 'i':
-                inline_out = TRUE;
+                inline_out = true;
                 break;
             case 't':
                 func_style = FUNC_TRADITIONAL;
@@ -780,7 +780,7 @@ static void process_options(int* pargc, char*** pargv)
                 exit(EXIT_FAILURE);
                 break;
             case 'v':
-                variables_out = TRUE;
+                variables_out = true;
                 break;
             case 'o':
                 if(freopen(optarg, "w", stdout) == 0)
@@ -797,20 +797,20 @@ static void process_options(int* pargc, char*** pargv)
                 }
                 break;
             case 'T': /* emit typedefs */
-                types_out = TRUE;
+                types_out = true;
                 break;
             case 'l':
                 proto_style = PROTO_LINTLIBRARY;
-                extern_out = FALSE;
-                types_out = TRUE;
-                variables_out = TRUE;
+                extern_out = false;
+                types_out = true;
+                variables_out = true;
     #if !defined(vms) && !defined(MSDOS)
                 (void)strcat(cpp_opt, " -C"); /* pass-through comments */
     #endif
                 break;
             case 'X':
                 extern_in = (unsigned)atoi(optarg);
-                do_tracking = TRUE;
+                do_tracking = true;
                 if((int)extern_in < 0)
                     usage();
                 break;
@@ -902,7 +902,7 @@ int main(int argc, char* argv[])
         {
             case FUNC_ANSI:
             case FUNC_BOTH:
-                lint_shadowed = TRUE; /* e.g., ctype.h */
+                lint_shadowed = true; /* e.g., ctype.h */
                 proto_style = PROTO_ANSI_LLIB;
                 break;
         }
@@ -926,11 +926,11 @@ int main(int argc, char* argv[])
         if(func_style != FUNC_NONE)
         {
             proto_style = PROTO_NONE;
-            variables_out = FALSE;
-            file_comments = FALSE;
+            variables_out = false;
+            file_comments = false;
         }
         process_file(stdin, "stdin");
-        pop_file(FALSE);
+        pop_file(false);
     }
     else
     {
@@ -1033,15 +1033,15 @@ int main(int argc, char* argv[])
                 {
                     (void)unlink(temp);
                 }
-                pop_file(TRUE);
+                pop_file(true);
     #endif
             }
             else
             {
-                pop_file(FALSE);
+                pop_file(false);
             }
 #else /* no CPP defined */
-            pop_file(FALSE);
+            pop_file(false);
 #endif
         }
     }

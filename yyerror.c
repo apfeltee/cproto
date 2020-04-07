@@ -180,7 +180,7 @@ static void yaccExpected(const char* s, int count)
     }
     else
     {
-        int found = FALSE;
+        int found = false;
 
         strcpy(tmp, t);
         if(!strncmp(t, "T_", 2))
@@ -190,7 +190,7 @@ static void yaccExpected(const char* s, int count)
                 if(!strcmp(t, tbl[j].name))
                 {
                     t = tbl[j].actual;
-                    found = TRUE;
+                    found = true;
                     break;
                 }
             }

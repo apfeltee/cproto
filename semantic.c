@@ -133,7 +133,7 @@ Declarator* new_declarator(const char* text, const char* name, long offset)
     new_ident_list(&d->params);
     d->head = d;
     d->func_stack = NULL;
-    d->pointer = FALSE;
+    d->pointer = false;
     return d;
 }
 
@@ -224,7 +224,7 @@ void free_parameter(Parameter* param)
     free(param);
 }
 
-/* Return TRUE if the parameter is void.
+/* Return true if the parameter is void.
  */
 static boolean is_void_parameter(Parameter* p)
 {
@@ -388,14 +388,14 @@ static int put_parameter(FILE* outf,
                 s = supply_parm(count);
         }
         put_string(outf, s); /* ... remainder of p->declarator.name */
-        return (TRUE);
+        return (true);
     }
 
     s2 = p->decl_spec.text;
     if(lintLibrary())
     {
         if(is_void_parameter(p))
-            return (FALSE);
+            return (false);
         indent(outf);
         if(knrLintLibrary() && !*s2)
             s2 = "int";
@@ -421,7 +421,7 @@ static int put_parameter(FILE* outf,
         {
             if((t = strstr(s, "%s")) != 0)
             {
-                int parenthesized = FALSE;
+                int parenthesized = false;
                 Declarator* q;
 
                 free(p->declarator->name);
@@ -437,7 +437,7 @@ static int put_parameter(FILE* outf,
                             sprintf(temp, "(*%s)", p->declarator->name);
                             free(q->text);
                             q->text = xstrdup(temp);
-                            parenthesized = TRUE;
+                            parenthesized = true;
                         }
                         else
                         {
@@ -501,7 +501,7 @@ static int put_parameter(FILE* outf,
             put_declarator(outf, p->declarator, commented);
         }
     }
-    return (TRUE);
+    return (true);
 }
 
 /* Output a parameter list.
@@ -545,7 +545,7 @@ static void put_param_list(FILE* outf, Declarator* declarator, int commented)
 
         if(where == FUNC_PROTO && knrLintLibrary() && (func_declarator != declarator))
         {
-            do_cmt = TRUE; /* patch: shouldn't have gotten here at all */
+            do_cmt = true; /* patch: shouldn't have gotten here at all */
         }
         if(where == FUNC_DEF && declarator->params.comment != NULL)
         {
@@ -624,7 +624,7 @@ static void put_parameters(FILE* outf, Declarator* declarator, int commented)
             if(proto_comments)
             {
                 put_string(outf, COMMENT_BEGIN);
-                put_param_list(outf, declarator, TRUE);
+                put_param_list(outf, declarator, true);
                 put_string(outf, COMMENT_END);
             }
         }
@@ -814,7 +814,7 @@ static void put_llib_params(Declarator* declarator, int commented)
     {
         if(lint_ellipsis(p))
             break;
-        if(putParameter(stdout, p, FALSE, ++count, commented))
+        if(putParameter(stdout, p, false, ++count, commented))
             putchar(';');
         p = p->next;
     }
@@ -827,7 +827,7 @@ void gen_declarations(DeclSpec* decl_spec, /* declaration specifier */
                       DeclaratorList* decl_list) /* list of declared variables */
 {
     Declarator* d;
-    int commented = FALSE;
+    int commented = false;
     int saveNest = nestedParams;
 
 
@@ -914,10 +914,10 @@ void gen_declarations(DeclSpec* decl_spec, /* declaration specifier */
         }
         flush_varargs();
     }
-    exitlike_func = FALSE;
+    exitlike_func = false;
 }
 
-/* Return TRUE if the function uses varargs.
+/* Return true if the function uses varargs.
  */
 static int uses_varargs(Declarator* declarator)
 {
@@ -965,7 +965,7 @@ static void set_param_decl_spec(Declarator* declarator)
 void gen_prototype(DeclSpec* decl_spec, Declarator* declarator)
 {
     Parameter* p;
-    int commented = FALSE;
+    int commented = false;
 
     if(proto_style == PROTO_NONE || (decl_spec->flags & DS_JUNK))
     {
@@ -1047,7 +1047,7 @@ void gen_func_declarator(Declarator* declarator)
     format = FMT_FUNC;
     nestedParams = 0;
 
-    put_func_declarator(cur_tmp_file(), declarator, FALSE);
+    put_func_declarator(cur_tmp_file(), declarator, false);
     cur_file_changed();
 }
 
@@ -1196,7 +1196,7 @@ void gen_func_definition(DeclSpec* decl_spec, Declarator* declarator)
             fputc(' ', cur_tmp_file());
 
             func_style = FUNC_ANSI;
-            put_func_declarator(cur_tmp_file(), declarator, FALSE);
+            put_func_declarator(cur_tmp_file(), declarator, false);
         }
         fputs("\n#else\n\n", cur_tmp_file());
 
@@ -1216,8 +1216,8 @@ void gen_func_definition(DeclSpec* decl_spec, Declarator* declarator)
 
             format = FMT_FUNC;
             func_style = FUNC_TRADITIONAL;
-            put_func_declarator(cur_tmp_file(), declarator, FALSE);
-            put_param_decl(func_declarator, FALSE);
+            put_func_declarator(cur_tmp_file(), declarator, false);
+            put_param_decl(func_declarator, false);
         }
 
         fputs("\n#endif", cur_tmp_file());
@@ -1240,10 +1240,10 @@ void gen_func_definition(DeclSpec* decl_spec, Declarator* declarator)
         fputc(' ', cur_tmp_file());
 
         /* Output function declarator. */
-        put_func_declarator(cur_tmp_file(), declarator, FALSE);
+        put_func_declarator(cur_tmp_file(), declarator, false);
         if(func_style == FUNC_TRADITIONAL)
         {
-            put_param_decl(func_declarator, FALSE);
+            put_param_decl(func_declarator, false);
         }
     }
 

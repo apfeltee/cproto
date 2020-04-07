@@ -124,14 +124,14 @@ static char* strip_name(char* s)
     char* t;
     unsigned n;
     size_t len;
-    int standard = FALSE;
+    int standard = false;
 
     for(n = 1; n < num_inc_dir; n++)
     {
         len = strlen(inc_dir[n]);
         if(!strncmp(inc_dir[n], s, len) && is_path_sep(s[len]))
         {
-            standard = TRUE;
+            standard = true;
             s += len + 1;
             quote_l = '<';
             quote_r = '>';
@@ -210,9 +210,9 @@ static int already_included(char* path)
     if(!include_list)
         include_list = new_symbol_table();
     if(find_symbol(include_list, path) != NULL)
-        return TRUE;
+        return true;
     new_symbol(include_list, path, NULL, DS_NONE);
-    return FALSE;
+    return false;
 }
 
 /*
@@ -227,9 +227,9 @@ int already_declared(char* name)
     if(find_symbol(declared_list, name) == 0)
     {
         (void)new_symbol(declared_list, name, 0, 0);
-        return FALSE;
+        return false;
     }
-    return TRUE;
+    return true;
 }
 
 /*
@@ -239,7 +239,7 @@ static int InitTracking;
 
 void begin_tracking(void)
 {
-    InitTracking = FALSE;
+    InitTracking = false;
 }
 
 static int c_suffix(char* path)
@@ -259,8 +259,8 @@ static int c_suffix(char* path)
 static int ignored(char* path)
 {
     if(strcmp(path, "<built-in>") == 0 || strcmp(path, "<command line>") == 0)
-        return TRUE;
-    return FALSE;
+        return true;
+    return false;
 }
 
 static const char* skip_dot(const char* a)
@@ -301,7 +301,7 @@ void track_in(void)
     { /* begin new (nested?) file */
         if(!InitTracking)
         {
-            InitTracking = TRUE;
+            InitTracking = true;
             /* yacc may omit first cpp-line! */
             in_include = base_level = (unsigned)!same_file(cur_file_name(), base_file);
             make_inc_stack(0, base_file);
@@ -348,11 +348,11 @@ void track_in(void)
     #endif
 
         flush_varargs();
-        for(n = in_include, found = FALSE; (int)n >= 0; n--)
+        for(n = in_include, found = false; (int)n >= 0; n--)
         {
             if(same_file(get_inc_stack(n), s))
             {
-                found = TRUE;
+                found = true;
                 in_include--;
                 break;
             }
@@ -433,20 +433,20 @@ int want_typedef(void)
     if(lintLibrary())
     {
         if(in_include == 0)
-            return (TRUE);
+            return (true);
     }
     else if(types_out)
     {
-        return (TRUE);
+        return (true);
     }
-    return (FALSE);
+    return (false);
 }
 
 void begin_typedef(void)
 {
     if(want_typedef())
     {
-        in_typedef = TRUE;
+        in_typedef = true;
         fmt_library(1);
         copy_typedef("typedef");
     }
@@ -465,7 +465,7 @@ void copy_typedef(const char* s)
     }
     else if(implied_cnt > 0)
     { /* "KEY ID {" ? */
-        add2implied_buf(s, TRUE);
+        add2implied_buf(s, true);
         if(!isspace(UCH(*s)))
             implied_cnt--;
         if((implied_cnt == 2 || implied_cnt == 1) && !strcmp(s, "{"))
@@ -478,7 +478,7 @@ void copy_typedef(const char* s)
 void end_typedef(void)
 {
     copy_typedef("\n");
-    in_typedef = FALSE;
+    in_typedef = false;
     (void)implied_typedef();
 }
 
@@ -486,7 +486,7 @@ void imply_typedef(const char* s)
 {
     if(!in_typedef && want_typedef())
     {
-        add2implied_buf(s, FALSE);
+        add2implied_buf(s, false);
         implied_cnt = 3;
     }
 }
@@ -524,7 +524,7 @@ int lint_ellipsis(Parameter* p)
  */
 void flush_varargs(void)
 {
-    exitlike_func = FALSE;
+    exitlike_func = false;
 
     varargs_num = 0;
     if(varargs_str != 0)
@@ -591,14 +591,14 @@ int is_actual_func(Declarator* d)
         if(d->func_stack->text[0] == PAREN_L && d->func_stack->text[1] == '*')
         {
             if(strstr(d->func_stack->text, "()") != 0)
-                return TRUE;
+                return true;
         }
         else
         {
-            return TRUE;
+            return true;
         }
     }
-    return FALSE;
+    return false;
 }
 
 /*
@@ -666,7 +666,7 @@ void put_body(FILE* outf,
         put_string(outf, ";");
     }
     put_newline(outf);
-    exitlike_func = FALSE;
+    exitlike_func = false;
 }
 
     #ifdef NO_LEAKS

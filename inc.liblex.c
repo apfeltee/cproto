@@ -46,7 +46,7 @@ void gcc_attribute(void)
     bfr[len] = '\0';
     if(!strcmp(bfr, "((noreturn))"))
     {
-        exitlike_func = TRUE;
+        exitlike_func = true;
     }
     else if(sscanf(bfr, "((format(printf,%d,%d)))", &num1, &num2) == 2)
     {
@@ -143,22 +143,22 @@ int decipher_comment(char* keyword, int len)
         else if(!strcmp(keyword, "PRINTFLIKE"))
         {
             cmtVal.varargs = 1;
-            cmtVal.varText = TRUE;
+            cmtVal.varText = true;
         }
         else if(sscanf(keyword, "PRINTFLIKE%d", &value) == 1)
         {
             cmtVal.varargs = value;
-            cmtVal.varText = TRUE;
+            cmtVal.varText = true;
         }
         else if(!strcmp(keyword, "SCANFLIKE"))
         {
             cmtVal.varargs = 2;
-            cmtVal.varText = TRUE;
+            cmtVal.varText = true;
         }
         else if(sscanf(keyword, "SCANFLIKE%d", &value) == 1)
         {
             cmtVal.varargs = value;
-            cmtVal.varText = TRUE;
+            cmtVal.varText = true;
             /* these are extensions added to simplify library-generation */
         }
         else if(!strcmp(keyword, "LINT_EXTERN"))
@@ -179,7 +179,7 @@ int decipher_comment(char* keyword, int len)
         }
         else if(!strcmp(keyword, "LINT_SHADOWED"))
         {
-            lint_shadowed = TRUE;
+            lint_shadowed = true;
         }
     }
     return 0;
@@ -435,7 +435,7 @@ FILE* cur_tmp_file(void)
  */
 void cur_file_changed(void)
 {
-    cur_file->changed = TRUE;
+    cur_file->changed = true;
 }
 
 /* Return the temporary file offset of beginning of the current comment.
@@ -493,7 +493,7 @@ FILE* tmpfile(void)
 /* Push a file onto the include stack.	The stream yyin must already
  * point to the file.
  * @name filename
- * @convert if TRUE, convert function definitions
+ * @convert if true, convert function definitions
  */
 void include_file(char* name, int convert)
 {
@@ -521,7 +521,7 @@ void include_file(char* name, int convert)
     cur_file->file_name = strcpy((char*)xmalloc(cur_file->len_file_name), name);
     cur_file->line_num = 1;
     cur_file->convert = (boolean)convert;
-    cur_file->changed = FALSE;
+    cur_file->changed = false;
 
 #ifdef FLEX_SCANNER
     buffer_stack[inc_depth] = yy_create_buffer(yyin, YY_BUF_SIZE);
@@ -535,7 +535,7 @@ void include_file(char* name, int convert)
         if(cur_file->tmp_file == NULL)
         {
             fprintf(stderr, "%s: cannot create temporary file\n", progname);
-            cur_file->convert = FALSE;
+            cur_file->convert = false;
         }
     }
 }
@@ -687,7 +687,7 @@ int yywrap(void)
 {
     if(inc_depth > 0)
     {
-        pop_file(FALSE);
+        pop_file(false);
         return 0;
     }
     else
