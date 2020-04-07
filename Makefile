@@ -74,7 +74,8 @@ H_FILES = \
 	symbol.h \
 	headlex.h \
 	headyacc.h \
-	inc.liblex.c
+	inc.liblex.c \
+	inc.libyacc.c
 
 C_FILES = \
 	$(THIS).c \
