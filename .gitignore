@@ -11,6 +11,8 @@
 trash
 trash/*
 lex.yy.c
+y.tab.c
+y.tab.h
 
 # variations of temporary test files
 t.c
