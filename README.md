@@ -1,3 +1,13 @@
+
+This is mostly an attempt to keep `cproto` up-to-date.  
+Ideally, you should be able to clone this repository, and just run `make`.  
+If that doesn't work for you, or you found other problems, please create an issue! Thank you.
+
+
+Below is the original README file.
+
+----
+
 Cproto is a program that generates function prototypes and variable
 declarations from C source code.  It can also convert function definitions
 between the old style and the ANSI C style.  This conversion overwrites the
