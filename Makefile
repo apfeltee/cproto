@@ -1,6 +1,11 @@
-# $Id: Makefile.in,v 4.26 2018/05/24 23:36:34 tom Exp $
-#
-# UNIX template-makefile for C prototype generator
+
+###
+## DO NOT DELETE THIS FILE!
+##
+## TODO: move to something saner, like mason, or cmake.
+##       currently assumes gcc setup
+##       also, currently adds .exe. sorry.
+###
 
 THIS = cproto
 RELEASE = 4_7o
@@ -10,10 +15,10 @@ RELEASE = 4_7o
 srcdir = .
 
 
-CC		= gcc
+CC		?= gcc
 CPP		= gcc -E
-LEX		= flex
-YACC		= bison -y
+LEX		?= flex
+YACC		?= bison
 LINT		= 
 CTAGS		= ctags
 
@@ -27,7 +32,7 @@ CPPFLAGS	= -I. -I$(srcdir) $(DEFINES) -DHAVE_CONFIG_H  -D_GNU_SOURCE -D_DEFAULT_
 CFLAGS		= -g -O2 $(EXTRA_CFLAGS)
 LIBS		=  -lfl
 
-prefix		= /home/sebastian/code/programs/cproto/dist
+prefix		= ${PWD}/dist
 exec_prefix	= ${prefix}
 datarootdir	= ${prefix}/share
 
@@ -66,14 +71,20 @@ H_FILES = \
 	system.h \
 	$(THIS).h \
 	semantic.h \
-	symbol.h
+	symbol.h \
+	headlex.h \
+	headyacc.h \
+	inc.liblex.c
 
 C_FILES = \
 	$(THIS).c \
+	dump.c \
 	lintlibs.c \
 	semantic.c \
 	strkey.c \
-	symbol.c
+	symbol.c \
+	trace.c \
+	yyerror.c
 
 AUX_FILES = \
 	lex.l \
@@ -81,10 +92,17 @@ AUX_FILES = \
 
 JUNK =	\
 	lex.yy.c \
-	y.tab.c
+	y.tab.c \
+	y.tab.h
 
 EXTRA_OBJS = 
-OBJECTS = $(THIS)$o lintlibs$o semantic$o strkey$o symbol$o y.tab$o \
+OBJECTS = \
+	$(THIS)$o \
+	lintlibs$o \
+	semantic$o \
+	strkey$o \
+	symbol$o \
+	y.tab$o \
 	$(EXTRA_OBJS)
 SOURCES = $(DOC_FILES) $(MAK_FILES) $(H_FILES) $(C_FILES) $(AUX_FILES)
 
@@ -109,7 +127,7 @@ $(PROG) : $(OBJECTS)
 	$(CC) $(LDFLAGS) $(CFLAGS) -o $@ $(OBJECTS) $(LIBS)
 
 y.tab.c : grammar.y
-	$(YACC) $(srcdir)/grammar.y
+	$(YACC) -y -d $(srcdir)/grammar.y
 
 lex.yy.c : lex.l
 	$(LEX) $(srcdir)/lex.l
@@ -122,7 +140,7 @@ clean :: mostlyclean
 	- cd $(srcdir)/testing && $(MAKE) $@
 
 distclean :: clean
-	- rm -f config.log config.cache config.status config.h Makefile man2html.tmp
+	- rm -f  man2html.tmp
 	- rm -f .version .fname
 	- cd $(srcdir)/testing && $(MAKE) $@
 

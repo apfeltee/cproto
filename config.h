@@ -1,8 +1,6 @@
-/* config.h.  Generated automatically by configure.  */
-/* @configure_input@ */
-/* $Id: config_h.in,v 4.2 1995/01/01 19:34:59 cthuang Exp $ */
 
-#define SYSTEM_NAME "cygwin"
+/* DO NOT DELETE THIS FILE  */
+
 #define YYTEXT_POINTER 1
 #define STDC_HEADERS 1
 #define HAVE_STDLIB_H 1

@@ -1,10 +1,18 @@
 *.o
 *.obj
+*.out
 *.exe
+*.dll
 *.a
 *.lib
 *.stackdump
 *.log
+# this is where the old autoconf files reside. no need to add them
+trash
+trash/*
+lex.yy.c
+
+# variations of temporary test files
 t.c
 t.cpp
 t.h
